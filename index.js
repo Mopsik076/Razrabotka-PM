@@ -1,4 +1,4 @@
-function findElementIndex(matrix, target) {
+function findIndex(matrix, target) {
     for (let i = 0; i < matrix.length; i++) {
         let neko = matrix[i];
         let j = neko.indexOf(target);
@@ -17,7 +17,7 @@ const a = [
 alert(a)
 let Find = Number(prompt("Введите число:"));
 
-let result = findElementIndex(a, Find);
+let result = findIndex(a, Find);
 
 if (result === null) {
     alert("Элемент не найден");
