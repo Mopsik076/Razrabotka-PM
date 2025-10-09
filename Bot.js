@@ -1,19 +1,16 @@
-// Вопрос 1
-let answer1 = prompt("Какое твоё любимое аниме?","не смотреть аниме");
-alert("Вы предпочитаете " + answer1 + ".");
+const questions = [
+    { text: "Какое ваше любимое аниме?", hint: "не смотреть аниме" },
+    { text: "Как у вас дела?", hint: "будет хорошо" },
+    { text: "Какое у вас хобби?", hint: "лень" },
+    { text: "Как вас зовут?", hint: "Безымянный" },
+    { text: "Что вы любите?", hint: "себя" }
+];
 
-// Вопрос 2
-let answer2 = prompt("Как у вас дела?","будет хорошо");
-alert("У вас всё " + answer2 + ".");
+let randomIndex = Math.floor(Math.random() * questions.length);
 
-// Вопрос 3
-let answer3 = prompt("Какое у вас хобби?","лень");
-alert("Ваше хобби - " + answer3 + ".");
+let selectedQuestion = questions[randomIndex].text;
+let hint = questions[randomIndex].hint;
 
-// Вопрос 4
-let answer4 = prompt("Как вас зовут?","Безымянный");
-alert("Вас зовут " + answer4 + ".");
+let userAnswer = prompt(selectedQuestion, hint);
 
-// Вопрос 5
-let answer5 = prompt("Что вы любите?","себя");
-alert("Вы любите " + answer5 + ".");
+alert("Вы сказали: " + userAnswer);
