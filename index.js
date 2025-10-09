@@ -1,20 +1,26 @@
-function id (matrix, target) {
-    for (let i = 0; i < matrix.length; i++){
-        const Neko = matrix[i];
-        const Nekoid = Neko.indexOf(target)
-        if (Nekoid !== -1) {
-            return [i,Nekoid]
-        };
-    };
-};
+function findElementIndex(matrix, target) {
+    for (let i = 0; i < matrix.length; i++) {
+        let neko = matrix[i];
+        let j = neko.indexOf(target);
+        if (j !== -1) {
+            return [i, j];
+        }
+    }
+    return null;
+}
 
-
-a = [
-    [1,2,3],
-    [4,5,6],
-    [7,8,9]
+const a = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
 ];
+alert(a)
+let Find = Number(prompt("Введите число:"));
 
+let result = findElementIndex(a, Find);
 
-alert(id(a, 8));
-
+if (result === null) {
+    alert("Элемент не найден");
+} else {
+    alert(`Элемент ${Find} найден в позиции (${result[0]}, ${result[1]})`);
+}
