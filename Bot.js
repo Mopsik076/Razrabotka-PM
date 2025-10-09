@@ -1,16 +1,15 @@
 const questions = [
-    { text: "Какое ваше любимое аниме?", hint: "не смотреть аниме" },
-    { text: "Как у вас дела?", hint: "будет хорошо" },
-    { text: "Какое у вас хобби?", hint: "лень" },
-    { text: "Как вас зовут?", hint: "Безымянный" },
-    { text: "Что вы любите?", hint: "себя" }
+    { text: "Какое ваше любимое аниме?"},
+    { text: "Как у вас дела?"},
+    { text: "Какое у вас хобби?"},
+    { text: "Как вас зовут?" },
+    { text: "Что вы любите?"}
 ];
 
-let randomIndex = Math.floor(Math.random() * questions.length);
+let random = Math.floor(Math.random() * questions.length);
 
-let selectedQuestion = questions[randomIndex].text;
-let hint = questions[randomIndex].hint;
+let Question = questions[random].text;
 
-let userAnswer = prompt(selectedQuestion, hint);
+let Answer = prompt(Question);
 
-alert("Вы сказали: " + userAnswer);
+alert("Вашь ответ: " + Answer);
