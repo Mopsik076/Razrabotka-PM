@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SexWithMegumin</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('https://pw.artfile.me/wallpaper/13-03-2018/650x366/anime-kono-subarashii-sekai-ni-shukufuku-1315723.jpg'); /* Замени на свою картинку */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* Основная страница вопросов */
+        #qcontainer {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0);
+        }
+        button {
+        font-size: 2em;
+        padding: 20px 35px;
+        background-color: #00aaa2a6;
+        color: rgb(0, 0, 0);
+        border: none;
+        outline: none;
+        transition: all 0.3s ease;
+        border-radius: 50%;
+        }
+
+        /* Окно с изображением поверх всех элементов */
+        .icontainer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgb(80, 0, 0);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            visibility: hidden;
+            transition: visibility 0s linear 0.3s, opacity 0.3s ease-in-out;
+        }
+
+        /* Активное состояние окна с изображением */
+        .icontainer.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Содержимое изображения */
+        .icontent {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+
+        img {
+            max-width: 110vw;
+            max-height: 110vh;
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body>
+<div id="qcontainer"> <!-- Основной контейнер вопросов -->
+    <button onclick="Start()">Соблазнять</button>
+</div>
+
+<div class="icontainer"> <!-- Окно с изображением -->
+    <div class="icontent">
+        <h2></h2>
+        <img src="" alt="Изображение">
+    </div>
+</div>
+</div>
+<script>
+    // ВНИМАНИЕ! Присутствуют хентай сцены!!! Лица младше 18 лет, прошу, покиньте этот код!
+
+    // Список вопросов. Всё задаётся случайно.
+    const questions = [
+        { text: "А что тебе нравится?" },
+        { text: "Что ты делаешь?" },
+        { text: "Какой у тебя класс?" },
+        { text: "Сегодня отличеый день!" },
+        { text: "Ты же любишь магию взрывов?" },
+        { text: "Сколько тебе?" },
+        { text: "Аква такая надоедливая..." },
+        { text: "Хочешь стать моей мишенью для магии?" },
+        { text: "Я милая?" },
+        { text: "Как тебе сегодняшнее рагу в таверне?" },
+        { text: "В-З-Р-Ы-В!!!" },
+        { text: "Наш народ великий, да?" },
+        { text: "Что ты планируешь делать?" },
+        { text: "Поможешь поохотится на жаб?" },
+        { text: "ЭЙ! Куда ты смотришь?" },
+    ];
+    //Счетчик "симпатии"
+    let counter = 0;
+    //Вариатны позитивных ответов
+    const Horoshiy = [
+        "Звучит очень мило!",
+        "Прикольно.",
+        "Мне нравится!",
+        "Ты меня заинтересовал.",
+        "Приятно слышать!"
+    ];
+    //Варианты негативных ответов
+    const Plohoy = [
+        "Отвратительно!",
+        "Скучно!",
+        "Ты додик что-ли?",
+        "Звучишь как мой дед, такой же нудным. ",
+        "Теперь понятно почему никто с тобой не дружит."
+    ];
+    //Реакция на пустые ответы
+        const Tupoy = [
+        "Не игнорируй меня!",
+        "ЭЙ!",
+        "Ты молчишь как тот парень, которого я тогда утопила.",
+        "Придурок."
+    ];
+    //Даже не спрашивайте. Я примерно понимаю как это работает, но объяснить я не могу. Просто знайте, это функция для вывидения картинок.
+    function showImage(src, caption) {
+        const iContainer = document.querySelector('.icontainer');
+        const content = iContainer.querySelector('.icontent');
+        content.querySelector('img').src = src;
+        iContainer.classList.add('active'); // Включаем активное состояние
+        setTimeout(() => {
+            iContainer.classList.remove('active'); // Скрываем изображение спустя 6 секунды
+        }, 6000);
+    }
+
+    //Имя для дальнейших ответов
+    let Name = prompt("Как вас зовут?", "Казума");
+
+    //Функция кнопки
+    function Start() {
+        nextQuestion();
+    }
+    //Функция функции кнопки, для реролла вопроса
+    function nextQuestion() {
+        let question = questions[Math.floor(Math.random() * questions.length)].text;
+        let answer = prompt(question);
+
+        //Ага..
+        if(answer.trim().toLowerCase() === 'я гей') {
+            alert('Ты заплакал как ребёнок и убежал...');
+            alert('Ты потерял свой шанс.');
+            counter = 0;
+            return;
+        }
+        // Пустые ответы
+        if (!answer.trim()) {
+            alert(Tupoy[Math.floor(Math.random() * Tupoy.length)]);
+            counter--;
+            if (counter < 0) {
+                counter = 0;
+            }
+            nextQuestion();
+            return;
+        }
+        //Случайная реакция Мегумин
+        let Otvet = Math.random() > 0.3;
+        
+        let message = Otvet ? Horoshiy[Math.floor(Math.random() * Horoshiy.length)] : Plohoy[Math.floor(Math.random() * Plohoy.length)];
+
+        alert(`${Name}: ${answer}\n\nМегумин: ${message}`);
+        
+        //Сетчик "симпатии"
+        if(Otvet) {
+            counter++;
+        } else {
+            counter--; 
+        }
+        //Не меньше 0
+        if(counter < 0) {
+            counter = 0;
+        }
+
+        alert(`Симпатия: ${counter}`)
+
+        //СЕКРЕТНЫЕ ХЕНТАЙ СЦЕНЫ! Просто бонусом. ТАМ ПРЯМ ХЕНТ!
+        if(answer.trim().toLowerCase() === "секрет"){
+            showImage('https://ic-vt-nss.xhcdn.com/a/YTQwYzQ5ZDE4ZTQyOTRjMzZmY2VhOWM3OWNiMTFjY2E/s(w:2560,h:1440),webp/027/668/227/v2/2560x1440.211.webp');
+        }
+        if(answer.trim().toLowerCase() === "рождество"){
+            showImage('https://cdn.truyen-hentai.com/megumin-is-so-fine-her-body-is-enough-to-make-me?interlace=1&quality=90&type=jpeg&url=https%3A%2F%2Fi.redd.it%2Fi1pt2mof9a2f1.jpeg&width=400&sign=GtKAzXL6cYr1Zoj4k5PUilvNRRpU45B9Dvnd27BahXw');
+        }
+        if(answer.trim().toLowerCase() === "рагу"){
+            showImage('https://r34i.paheal-cdn.net/23/7b/237bd6f4979c2f3672f9a46390908f75');
+        }
+        if(answer.trim().toLowerCase() === "взрыв"){
+            showImage('https://rule34vault.com/posts/969/969940/969940.small.jpg');
+        }
+        if(answer.trim().toLowerCase() === "мегумин"){
+            showImage('https://img10.reactor.cc/pics/post/Megumin-KonoSuba-Anime-Hu-Tao-%28Genshin-Impact%29-8295526.png');
+        }
+        if(answer.trim().toLowerCase() === "деньги"){
+            showImage('https://s2.3hentai.net/d233216/16.jpg');
+        }
+        
+        //Варианты картинок в зависимости от "симпатии"
+        //Работает крайне криво
+        if ([3, 5, 7, 9, 10].includes(counter)) {
+            switch(counter) {
+                case 3:
+                    showImage('https://abrakadabra.fun/uploads/posts/2022-03/thumbs/1647367089_1-abrakadabra-fun-p-konosuba-megumin-1.jpg');
+                    alert("Смотри как я хорошо выгляжу!")
+                    break;
+                case 5:
+                    showImage('https://play.vsthemes.org/nova/1024576-1/55c/0cb55ced7f3123c1caa70525bfa1b5b4.webp');
+                    alert("Какого милого кота я нашла!")
+                    break;
+                case 7:
+                    showImage('https://s1.zerochan.net/Megumin.600.3636567.jpg');
+                    alert("Сегодня как то ветренно.")
+                    break;
+                case 9:
+                    showImage('https://img10.reactor.cc/pics/post/hiroki-%28yyqw7151%29-Anime-Artist-artist-Megumin-6769776.jpeg');
+                    alert("Куда ты смотришь?!")
+                    break;
+                case 10:
+                    showImage('https://cdn.truyen-hentai.com/megumin-6o3p8?interlace=1&quality=90&type=jpeg&url=https%3A%2F%2Fi.redd.it%2F6eycgcd0jlbe1.jpeg&width=400&sign=25pbU-kYK92zWgzva1eZIdBWdbl-s_vc7RwD7kRYdLY');
+                    alert("Думаю ты это заслужил!")
+                    break;
+            }
+        }
+        //Конец игры и её перезапуск
+        if(counter > 10) {
+            alert('Поздравляю, Мегумин вас любит!');
+            alert('Перезапускаю чат...');
+            counter = 0;
+            return;
+        }
+    }
+
+</script>
+</body>
+</html>
