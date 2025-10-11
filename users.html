@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        class User{
+            constructor(id, name, role, password) {
+                this.id = id;
+                this.name = name;
+                this.role = role;
+                this.password = password;
+            }
+        }
+
+        class UserStorage {
+            constructor() {
+                this.users = []
+            }
+        }
+
+        class Consts{
+            static UserExistsException = "Пользователь с таким именем уже зарегистрирован";
+            static UserNotFoundException = "Пользователь не найден"
+            static PasswordsNotMatchException = "Пароли не совпадают"
+            static PermissionException = "Нет прав"
+            static ProductExistsException = "Такой товар уже есть"
+        }
+
+        class UserService{
+
+            constructor() {
+                this.userStorage = new UserStorage();
+            }
+
+            signupAdmin(name, password) {
+                if(this.isExistsUserByName(name)) {
+                    return alert(Consts.UserExistsException);
+                }
+                let candidate = new User(this.userStorage.users.length + 1, name, "admin", password);
+                this.userStorage.users.push(
+                    candidate
+                );
+
+                return candidate;
+            }
+
+            isExistsUserByName(name) {
+                return this.userStorage.users.find(user => user.name == name) != null;
+            }
+
+            signup(name, password) {
+
+                if(this.isExistsUserByName(name)) {
+                    return alert(Consts.UserExistsException);
+                }
+
+                let candidate = new User(this.userStorage.users.length + 1, name, "user", password);
+                this.userStorage.users.push(
+                    candidate
+                );
+                return candidate;
+            }
+
+            signin(name, password) {
+                let candidate = this.userStorage.users.find(user => user.name == name)
+
+                if (candidate === null) {
+                    return alert(Consts.UserNotFoundException);
+                }
+
+                return password === candidate.password ? candidate : alert(Consts.PasswordsNotMatchException);
+            }
+        }
+
+        class Product{
+            constructor(id, name, price) {
+                this.id = id;
+                this.name = name;
+                this.price = price;
+            }
+        }
+
+        class ProductService{
+            constructor() {
+                this.productStorage = new ProductStorage();
+            }
+
+            createProduct(name, quantity, price, user) {
+                if (user == null)
+                    return;
+                if (typeof quantity !== 'number' || typeof price != 'number')
+                    return;
+                if (user.role != 'admin') {
+                    return alert(Consts.PermissionException)
+                }
+
+                if (this.productStorage.productMap.has(name)) {
+                    return alert(Consts.ProductExistsException)
+                }
+
+                let productCandidate = new Product(this.productStorage.productMap.size + 1, name, price)
+
+                this.productStorage.productMap.set(productCandidate, quantity);
+            }
+        }
+
+        class ProductStorage{
+            constructor() {
+                this.countProducts = 0;
+
+                this.productMap = new Map()
+            }
+        }
+
+        class Order{
+            constructor(id, userId, date, products) {
+                this.id = id;
+                this.userId = userId,
+                this.date = date;
+                this.products = products;
+                this.sumPrice = 0;
+
+                for(let i = 0; i < products.length; i++) {
+                    sumPrice += products[i].price;
+                }
+            }
+        }
+
+
+        let userService = new UserService();
+        let productService = new ProductService();
+
+        let user1 = userService.signupAdmin("Alex", "0000")
+        if (user1 instanceof User) 
+            alert("Пользователь зарегистрирован")
+
+        console.log(userService.userStorage)
+
+
+
+        let currentUser = userService.signin("Alex", "0000");
+        console.log(currentUser)
+
+        productService.createProduct("Bread", 10, 50, currentUser);
+
+        console.log(productService.productStorage)
+    </script> 
+</body>
+</html>
+
+<!-- Добавить в товары раздел категории. Реализовать покупку товаров пользователем, 
+ реализовать изменение цены товара. Реализовать поиск по названию товара. Реализовать удаление товара.
+ Реализовать заказы пользователей -->
