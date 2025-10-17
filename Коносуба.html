@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<!-- saved from url=(0040)http://127.0.0.1:5500/index.html#contact -->
+<html lang="ru"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>Коносуба</title>
+    
+<link rel="stylesheet" href="./Коносуба_files/style.css"></head>
+<body>
+    <header>
+        <h1>Коносуба</h1>
+        <nav>
+            <ul>
+                <li><a href="http://127.0.0.1:5500/index.html#about">О сериале</a></li>
+                <li><a href="http://127.0.0.1:5500/index.html#characters">Персонажи</a></li>
+                <li><a href="http://127.0.0.1:5500/index.html#episodes">Сезоны и серии</a></li>
+                <li><a href="http://127.0.0.1:5500/index.html#fanart">Фанарт</a></li>
+                <li><a href="http://127.0.0.1:5500/index.html#contact">Контакты</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <section id="about">
+        <h2>О сериале</h2>
+        <p>"KonoSuba: God's Blessing on This Wonderful World!" ("Коносуба") — японская серия лайт-новел, написанная Нато Эрису и иллюстрированная Такео Хигасида.</p>
+        <img src="./Коносуба_files/i" alt="Обложка сериала Коносуба">
+    </section>
+    
+    <section id="characters">
+        <h2>Основные персонажи</h2>
+        <div class="character">
+            <img src="./Коносуба_files/0e65e7640340a16068734dd46468fb9f.png" alt="Казума Сато">
+            <img src="./Коносуба_files/i(1)" alt="Богиня Аква">
+            <img src="./Коносуба_files/7860a4ce930e5b6afca1e1cfb5b6e46a.jpg" alt="Мегумин">
+            <img src="./Коносуба_files/1716824978_konosuba-season-3-episode-7-darkness.jpg" alt="Даркнесс">
+            <h3>Казума Сато</h3>
+            <p>Главный герой, попавший в мир фэнтези после смерти в своем мире.</p>
+            <h3>Аква</h3>
+            <p>До начала событий KonoSuba Аква была богиней воды, которая, как и многие другие боги, распределяла людей после их смерти.</p>
+            <h3>Мегумин</h3>
+            <p>Архимаг из клана Алых магов, присоединившаяся первой к группе Казумы. Является одним из основных персонажей серии KonoSuba.</p>
+            <h3>Даркнесс</h3>
+            <p>Она крестоносец, который присоединяется к команде Казумы в начале их приключений.</p>
+        </div>
+        
+        <!-- Другие персонажи -->
+    </section>
+    
+    <section id="episodes">
+        <h2>Сезоны и серии</h2>
+        <table>
+            <tbody><tr>
+                <th>Сезон</th>
+                <th>Серии</th>
+                <th>Год выпуска</th>
+            </tr>
+            <tr>
+                <td>1-й сезон</td>
+                <td>10 серий</td>
+                <td>2016</td>
+            </tr>
+            <!-- Добавьте остальные сезоны -->
+        </tbody></table>
+    </section>
+    
+    <section id="fanart">
+        <h2>Фанарты Мегумин</h2>
+        <div class="gallery">
+            <img src="./Коносуба_files/1647367089_1-abrakadabra-fun-p-konosuba-megumin-1.jpg" alt="Фанарт 1">
+            <img src="./Коносуба_files/Megumin-KonoSuba-Anime-Hu-Tao-(Genshin-Impact)-8295526.png" alt="Фанарт 2">
+            <img src="./Коносуба_files/hiroki-(yyqw7151)-Anime-Artist-artist-Megumin-6769776.jpeg" alt="Фанарт 3">
+        </div>
+    </section>
+    
+    <footer id="contact">
+        <h2>Контактная информация</h2>
+    </footer>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+
+</body></html>
