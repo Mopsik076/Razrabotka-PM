@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Онлайн Магазин</title>
+    <style>
+        * {
+    box-sizing: border-box;
+}
+
+body {
+
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('https://pw.artfile.me/wallpaper/13-03-2018/650x366/anime-kono-subarashii-sekai-ni-shukufuku-1315723.jpg'); /* Замени на свою картинку */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+}
+
+.form-container {
+    background-color: rgba(211, 211, 211, 0.671);
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,.1);
+    margin-bottom: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+input[type='text'], input[type='password'] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    cursor: pointer;
+    color: white;
+    background-color: #830000;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+}
+
+h1 {
+    color: rgb(255, 0, 0);
+    -webkit-text-stroke: 2px #000;
+}
+
+button:hover {
+    background-color: #6e0000;
+}
+
+#products-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+#products-list li {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #b9b9b9cc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,.1);
+}
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Онлайн Магазин</h1>
+    
+    <div id="registration-form" class="form-container">
+        <h2>Регистрация</h2>
+        <input type="text" placeholder="Имя пользователя" id="username-reg"/>
+        <input type="password" placeholder="Пароль" id="password-reg"/>
+        <button onclick="registerUser()">Зарегистрироваться</button>
+    </div>
+
+    <div id="login-form" class="form-container hidden">
+        <h2>Авторизация</h2>
+        <input type="text" placeholder="Имя пользователя" id="username-log"/>
+        <input type="text" placeholder="Пароль" id="password-log"/>
+        <button onclick="loginUser()">Войти</button>
+    </div>
+
+    <div id="products-list" class="hidden"></div>
+</div>
+
+<script>
+    class User {
+    constructor(id, name, role, password) {
+        this.id = id;
+        this.name = name;
+        this.role = role;
+        this.password = password;
+    }
+}
+
+class Product {
+    constructor(id, name, price, category) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.category = category;
+        this.reviews = [];
+        this.rating = 0;
+    }
+}
+
+class Review {
+    constructor(userId, userName, text, rating) {
+        this.userId = userId;
+        this.userName = userName;
+        this.text = text;
+        this.rating = rating;
+    }
+}
+
+class Order {
+    constructor(id, userId, products) {
+        this.id = id;
+        this.userId = userId;
+        this.date = new Date();
+        this.products = products;
+        this.totalPrice = this.calculateTotalPrice();
+    }
+
+    calculateTotalPrice() {
+        return this.products.reduce((acc, prod) => acc + prod.price, 0);
+    }
+}
+
+class UserService {
+    constructor() {
+        this.users = JSON.parse(localStorage.getItem('users')) || [];
+    }
+
+    register(username, password) {
+        const existingUser = this.users.find(u => u.name === username);
+        if(existingUser) alert('Пользователь с таким именем уже существует');
+        
+        const newUser = new User(this.users.length + 1, username, 'user', password);
+        this.users.push(newUser);
+        localStorage.setItem('users', JSON.stringify(this.users));
+        return newUser;
+    }
+
+    login(username, password) {
+        const user = this.users.find(u => u.name === username && u.password === password);
+        if (!user) alert('Неверное имя пользователя или пароль');
+        return user;
+    }
+}
+
+const userService = new UserService();
+
+document.querySelector('#registration-form button').addEventListener('click', () => {
+    try {
+        const username = document.querySelector('#username-reg').value.trim();
+        const password = document.querySelector('#password-reg').value.trim();
+        const newUser = userService.register(username, password);
+        console.log(`Новый пользователь зарегистрирован: ${newUser}`);
+        showLoginForm();
+    } catch(e) {
+        alert(e.message);
+    }
+});
+
+document.querySelector('#login-form button').addEventListener('click', () => {
+    try {
+        const username = document.querySelector('#username-log').value.trim();
+        const password = document.querySelector('#password-log').value.trim();
+        const loggedInUser = userService.login(username, password);
+        console.log(`Пользователь вошел: ${loggedInUser}`);
+        showProductsList(loggedInUser);
+    } catch(e) {
+        alert(e.message);
+    }
+});
+
+function showLoginForm() {
+    document.querySelector('#registration-form').classList.add('hidden');
+    document.querySelector('#login-form').classList.remove('hidden');
+}
+
+function showProductsList(user) {
+    document.querySelector('#login-form').classList.add('hidden');
+    document.querySelector('#products-list').innerHTML = '';
+    document.querySelector('#products-list').classList.remove('hidden');
+
+    const dummyProducts = [
+        { id: 1, name: 'Meat', price: 300 },
+        { id: 2, name: 'Bread', price: 80 },
+        { id: 3, name: 'Gunpowder', price: 1500 },
+        { id: 4, name: 'Milk', price: 180 }
+    ];
+
+    dummyProducts.forEach(p => {
+        const item = document.createElement('li');
+        item.innerText = `${p.name}: ${p.price}`;
+        document.querySelector('#products-list').appendChild(item);
+    });
+}
+</script>
+</body>
+</html>
