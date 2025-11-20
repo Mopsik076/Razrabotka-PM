@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>МегуминБанк</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f0f0f0; padding: 20px; }
+        h1 { color: navy; text-align: center; margin-bottom: 30px; }
+        .box { max-width: 400px; margin: auto; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,.1); padding: 20px; background-color: white; }
+        input[type=text], input[type=password], button { width: 100%; padding: 10px; margin-top: 10px; font-size: 1em; }
+        button { cursor: pointer; background-color: royalblue; color: white; border: none; transition: all 0.3s ease-in-out; }
+        button:hover { background-color: darkblue; }
+    </style>
+</head>
+<body>
+<h1>Банк</h1>
+<div class="box">
+    <h2>Авторизация / Регистрация</h2>
+    <label for="username">Имя:</label>
+    <input type="text" id="username" placeholder="Введите ваше имя" />
+    <label for="password">Пароль:</label>
+    <input type="password" id="password" placeholder="Введите пароль" />
+    <button onclick="login()">Вход</button>
+    <button onclick="register()">Регистрация</button>
+</div>
+
+<div id="accountSection" style="display:none;" class="box">
+    <h2>Ваш аккаунт</h2>
+    <p>Добро пожаловать, <span id="welcomeMessage"></span>!</p>
+    <p>Ваш баланс: <strong><span id="balanceDisplay">0 руб.</span></strong></p>
+    <button onclick="deposit()">Пополнить счет</button>
+    <button onclick="withdraw()">Снять деньги</button>
+</div>
+
+<script>
+let users = []; // Список пользователей
+let loggedInUser = null; // Текущий залогиненный пользователь
+
+// Вход пользователя
+function login() {
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    // Проверяем наличие пользователя
+    const user = users.find(u => u.username === username && u.password === password);
+    if (user) {
+        loggedInUser = user;
+        updateUI();
+    } else {
+        alert("Неправильное имя пользователя или пароль");
+    }
+}
+
+// Регистрировать нового пользователя
+function register() {
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    // Проверка на существование пользователя
+    if(users.some(u => u.username === username)) {
+        alert("Пользователь с таким именем уже существует");
+        return;
+    }
+
+    // Добавляем нового пользователя
+    users.push({
+        username: username,
+        password: password,
+        balance: 0
+    });
+    alert("Регистрация прошла успешно. Можете войти.");
+}
+
+// Обновляем UI после успешного входа
+function updateUI() {
+    document.getElementById("accountSection").style.display = 'block';
+    document.getElementById("welcomeMessage").textContent = loggedInUser.username;
+    document.getElementById("balanceDisplay").textContent = loggedInUser.balance + " руб.";
+}
+
+// Пополняем счет
+function deposit() {
+    const amount = prompt("Введите сумму пополнения:");
+    if (isNaN(amount)) {
+        alert("Некорректная сумма");
+        return;
+    }
+    loggedInUser.balance += parseInt(amount);
+    updateUI();
+}
+
+// Снимаем деньги
+function withdraw() {
+    const amount = prompt("Введите сумму снятия:");
+    if (isNaN(amount)) {
+        alert("Некорректная сумма");
+        return;
+    }
+    if (loggedInUser.balance >= amount) {
+        loggedInUser.balance -= parseInt(amount);
+        updateUI();
+    } else {
+        alert("Недостаточно средств");
+    }
+}
+</script>
+</body>
+</html>
