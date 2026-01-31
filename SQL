@@ -1,0 +1,107 @@
+CREATE TABLE orders (
+    ord_no INT PRIMARY KEY,
+    purch_amt DECIMAL(10,2),
+    ord_date DATE,
+    customer_id INT,
+    salesman_id INT
+);
+
+INSERT INTO orders VALUES
+(70001, 150.5, '2012-10-05', 3005, 5002),
+(70009, 270.65, '2012-09-10', 3001, 5005),
+(70002, 65.26, '2012-09-10', 3002, 5001),
+(70004, 110.5, '2012-08-17', 3009, 5003),
+(70007, 948.5, '2012-09-10', 3005, 5002),
+(70005, 2400.6, '2012-07-27', 3007, 5001),
+(70008, 5760, '2012-09-10', 3002, 5001),
+(70010, 1983.43, '2012-10-10', 3004, 5006),
+(70003, 2480.4, '2012-10-10', 3009, 5003),
+(70012, 250.45, '2012-06-27', 3008, 5002),
+(70011, 75.29, '2012-08-17', 3003, 5007),
+(70013, 3045.6, '2012-04-25', 3002, NULL);
+
+-- 1
+SELECT SUM(purch_amt)
+FROM orders;
+-- 2
+SELECT AVG(purch_amt)
+FROM orders;
+-- 3
+SELECT COUNT(DISTINCT salesman_id)
+FROM orders;
+-- 4
+SELECT COUNT(*)
+-- 5
+FROM orders;
+SELECT COUNT(ALL purch_amt)
+-- 6
+FROM orders;
+SELECT MAX(purch_amt)
+-- 7
+FROM orders;
+SELECT MIN(purch_amt)
+-- 8
+FROM orders;
+SELECT customer_id, MAX(purch_amt)
+-- 9
+FROM orders
+GROUP BY customer_id;
+SELECT customer_id, MAX(purch_amt)
+-- 10
+FROM orders
+GROUP BY customer_id;
+SELECT customer_id, ord_date, MAX(purch_amt)
+-- 11
+FROM orders
+GROUP BY customer_id, ord_date;
+-- 12
+SELECT salesman_id, MAX(purch_amt)
+FROM orders
+WHERE ord_date = '2012-08-17'
+GROUP BY salesman_id;
+-- 13
+SELECT customer_id, ord_date, MAX(purch_amt)
+FROM orders
+GROUP BY customer_id, ord_date
+HAVING MAX(purch_amt) BETWEEN 2000 AND 6000;
+-- 14
+SELECT customer_id, ord_date, MAX(purch_amt)
+FROM orders
+GROUP BY customer_id, ord_date
+HAVING MAX(purch_amt) IN (2000, 3000, 5760, 6000);
+-- 15
+SELECT customer_id, MAX(purch_amt)
+FROM orders
+WHERE customer_id BETWEEN 3002 AND 3007
+GROUP BY customer_id;
+-- 16
+SELECT customer_id, MAX(purch_amt)
+FROM orders
+WHERE customer_id BETWEEN 3002 AND 3007
+GROUP BY customer_id
+HAVING MAX(purch_amt) > 1000;
+-- 17
+SELECT salesman_id, MAX(purch_amt)
+FROM orders
+GROUP BY salesman_id
+HAVING salesman_id BETWEEN 5003 AND 5008;
+-- 18
+SELECT COUNT(*)
+FROM orders
+WHERE ord_date = '2012-08-17';
+-- 19
+SELECT COUNT(*)
+FROM orders
+WHERE salesman_id IS NOT NULL;
+-- 20
+SELECT ord_date, salesman_id, COUNT(*)
+FROM orders
+GROUP BY ord_date, salesman_id;
+-- 21
+SELECT AVG(purch_amt) AS "Average Price"
+FROM orders;
+-- 22
+SELECT customer_id, purch_amt
+FROM orders
+GROUP BY customer_id, purch_amt
+HAVING MAX(purch_amt) >= 350;
